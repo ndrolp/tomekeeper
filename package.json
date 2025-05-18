@@ -15,8 +15,9 @@
     "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "ndro-express-utils": "^0.0.2",
+    "ndro-express-utils": "^0.0.5",
     "nodemon": "^3.1.10"
   },
   "devDependencies": {
