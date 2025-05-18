@@ -18,7 +18,9 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "ndro-express-utils": "^0.0.5",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "pg": "^8.16.0",
+    "typeorm": "^0.3.24"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

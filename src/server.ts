@@ -5,6 +5,7 @@ import { defineRoutes } from "ndro-express-utils";
 import { Router } from "express";
 import AuthController from "./controllers/AuthController";
 import { CONFIG } from "./config";
+import { AppDataSource } from "./database";
 
 dotenv.config();
 const app = express();
@@ -13,14 +14,21 @@ app.use(express.json());
 
 defineRoutes([AuthController], app, true);
 
-app.listen(CONFIG.PORT, () => {
-    console.log(`Library service running on port ${CONFIG.PORT}`);
-});
-
 const router = Router();
 
 router.get("/", (_, res) => {
     res.json({ message: "Library service is up and running." });
 });
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Database connected.");
+        app.listen(CONFIG.PORT, () => {
+            console.log(`Library service running on port ${CONFIG.PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Error connecting to the database:", err);
+    });
 
 export default router;
