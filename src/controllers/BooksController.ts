@@ -13,4 +13,16 @@ export class BooksController {
     const newBook = await BooksService.createBook(newBookData);
     return res.status(201).json(newBook);
   }
+
+  @Route("get", "/")
+  async filterBooks(
+    req: Request<object, object, object, IBook>,
+    res: Response,
+  ) {
+    const query = req.query;
+
+    const filteredBooks = await BooksService.filter(query);
+
+    return res.json(filteredBooks);
+  }
 }
