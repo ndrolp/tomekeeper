@@ -6,13 +6,14 @@ import { Router } from "express";
 import AuthController from "./controllers/AuthController";
 import { CONFIG } from "./config";
 import { AppDataSource } from "./database";
+import { BooksController } from "./controllers/BooksController";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-defineRoutes([AuthController], app, true);
+defineRoutes([AuthController, BooksController], app, true);
 
 const router = Router();
 
