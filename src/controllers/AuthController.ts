@@ -6,16 +6,16 @@ import { LoginValidationSchema } from "../validation/AuthValidationSchemas";
 
 @Controller("/auth")
 export default class AuthController {
-    @Route("post", "/login")
-    @Validate(LoginValidationSchema)
-    async login(req: Request<{}, {}, LoginBody>, res: Response) {
-        const { username, password } = req.body as {
-            username: string;
-            password: string;
-        };
+  @Route("post", "/login")
+  @Validate(LoginValidationSchema)
+  async login(req: Request<object, object, LoginBody>, res: Response) {
+    const { username, password } = req.body as {
+      username: string;
+      password: string;
+    };
 
-        const response = await AuthService.generateToken({ username, password });
+    const response = await AuthService.generateToken({ username, password });
 
-        return res.json(response);
-    }
+    return res.json(response);
+  }
 }

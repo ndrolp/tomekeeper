@@ -17,18 +17,18 @@ defineRoutes([AuthController], app, true);
 const router = Router();
 
 router.get("/", (_, res) => {
-    res.json({ message: "Library service is up and running." });
+  res.json({ message: "Library service is up and running." });
 });
 
 AppDataSource.initialize()
-    .then(() => {
-        console.log("Database connected.");
-        app.listen(CONFIG.PORT, () => {
-            console.log(`Library service running on port ${CONFIG.PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Error connecting to the database:", err);
+  .then(async () => {
+    console.log("Database connected.");
+    app.listen(CONFIG.PORT, () => {
+      console.log(`Library service running on port ${CONFIG.PORT}`);
     });
+  })
+  .catch((err) => {
+    console.error("Error connecting to the database:", err);
+  });
 
 export default router;
