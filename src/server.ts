@@ -1,6 +1,6 @@
+import "reflect-metadata";
 import express from "express";
 import dotenv from "dotenv";
-import "reflect-metadata";
 import { defineRoutes } from "ndro-express-utils";
 import { Router } from "express";
 import AuthController from "./controllers/AuthController";

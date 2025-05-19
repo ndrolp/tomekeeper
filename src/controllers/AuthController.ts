@@ -9,11 +9,7 @@ export default class AuthController {
   @Route("post", "/login")
   @Validate(LoginValidationSchema)
   async login(req: Request<object, object, LoginBody>, res: Response) {
-    const { username, password } = req.body as {
-      username: string;
-      password: string;
-    };
-
+    const { username, password } = req.body;
     const response = await AuthService.generateToken({ username, password });
 
     return res.json(response);
