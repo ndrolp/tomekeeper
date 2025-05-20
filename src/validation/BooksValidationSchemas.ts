@@ -6,4 +6,5 @@ export const BookCreationSchema = Joi.object({
   genre: Joi.string(),
   publicationYear: Joi.number().integer(),
   description: Joi.string(),
+  language: Joi.string(),
 });

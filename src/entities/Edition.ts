@@ -1,19 +1,27 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  JoinColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Book } from "./Book";
+
+export enum EditionFormat {
+  HARDCOVER = "Hardcover",
+  PAPERBACK = "Paperback",
+  EBOOK = "Ebook",
+  AUDIOBOOK = "Audiobook",
+  PDF = "PDF",
+  EPUB = "EPUB",
+  MOBI = "MOBI",
+}
 
 @Entity()
 export class Edition {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  format!: string;
+  @Column({
+    type: "enum",
+    enum: EditionFormat,
+    nullable: true,
+  })
+  format!: EditionFormat;
 
   @Column({ nullable: true })
   publisher!: string;
@@ -24,7 +32,6 @@ export class Edition {
   @Column({ nullable: true, type: "date" })
   publicationDate!: string;
 
-  @OneToOne(() => Book)
-  @JoinColumn()
-  book!: Book;
+  @ManyToOne(() => Book, (book) => book.editions)
+  book: Book;
 }
