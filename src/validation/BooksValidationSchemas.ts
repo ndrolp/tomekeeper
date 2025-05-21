@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { SeriesCreationSchema } from "./SeriesValidationSchemas";
 
 export const BookCreationSchema = Joi.object({
   title: Joi.string().required(),
@@ -7,4 +8,6 @@ export const BookCreationSchema = Joi.object({
   publicationYear: Joi.number().integer(),
   description: Joi.string(),
   language: Joi.string(),
+  serie: SeriesCreationSchema,
+  seriesOrder: Joi.number(),
 });

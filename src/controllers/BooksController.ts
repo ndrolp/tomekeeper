@@ -19,9 +19,7 @@ export class BooksController {
     req: Request<object, object, object, IBook>,
     res: Response,
   ) {
-    const query = req.query;
-
-    const filteredBooks = await BooksService.filter(query);
+    const filteredBooks = await BooksService.filterHeader();
 
     return res.json(filteredBooks);
   }

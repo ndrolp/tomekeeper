@@ -15,3 +15,9 @@ export class Serie {
   @OneToMany(() => Book, (book) => book.serie)
   books: Book[];
 }
+
+export interface ISerie {
+  id?: number;
+  name: string;
+  description?: string;
+}

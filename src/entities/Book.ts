@@ -6,7 +6,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { Edition } from "./Edition";
-import { Serie } from "./Serie";
+import { ISerie, Serie } from "./Serie";
 
 @Entity()
 export class Book {
@@ -42,10 +42,12 @@ export class Book {
 }
 
 export interface IBook {
-  id: number;
+  id?: number;
   title: string;
   author?: string;
   genre?: string;
   publicationYear?: number;
   description?: string;
+  serie?: ISerie;
+  seriesOrder?: number;
 }
