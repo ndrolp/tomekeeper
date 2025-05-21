@@ -6,7 +6,7 @@
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "express", "multer", "node"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false

@@ -11,8 +11,8 @@ dev-dettached:
 	docker compose -f docker-compose.dev.yml up -d
 
 dev-run:
-	docker compose -f docker-compose.dev.yml up --build $1 $2 $2
+	docker compose -f docker-compose.dev.yml up --build 
 
 build-dev:
-	docker compose -f docker-compose.dev.yml build
+	docker compose -f docker-compose.dev.yml build --no-cache
 

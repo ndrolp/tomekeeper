@@ -7,19 +7,24 @@ import AuthController from "./controllers/AuthController";
 import { CONFIG } from "./config";
 import { AppDataSource } from "./database";
 import { BooksController } from "./controllers/BooksController";
+import cors from "cors";
+import { MediaController } from "./controllers/Media";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
-defineRoutes([AuthController, BooksController], app, true);
+defineRoutes([AuthController, BooksController, MediaController], app, true);
 
 const router = Router();
 
 router.get("/", (_, res) => {
   res.json({ message: "Library service is up and running." });
 });
+
+app.use("/static", express.static("/upload"));
 
 AppDataSource.initialize()
   .then(async () => {
