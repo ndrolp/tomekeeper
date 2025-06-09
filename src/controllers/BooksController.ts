@@ -3,6 +3,9 @@ import { Controller, Route, Validate } from "ndro-express-utils";
 import { BookCreationSchema } from "../validation/BooksValidationSchemas";
 import { IBook } from "../entities/Book";
 import { BooksService, GetBooksSortOptions } from "../services/BooksService";
+import { uploadTemporal } from "../libs/media";
+import EPub from "epub";
+import fs from "fs/promises";
 
 @Controller("/books")
 export class BooksController {
@@ -30,5 +33,46 @@ export class BooksController {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return res.json(filteredBooks);
+  }
+
+  @Route("post", "/analyze", uploadTemporal.single("file"))
+  async analyzeBook(req: Request, res: Response) {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    const epubPath = req.file.path;
+
+    try {
+      const epub = new EPub(epubPath);
+
+      epub.on("error", (err: Error) => {
+        throw err;
+      });
+
+      epub.on("end", async () => {
+        const metadata = {
+          title: epub.metadata.title,
+          author: epub.metadata.creator,
+          language: epub.metadata.language,
+          subject: epub.metadata.subject,
+          description: epub.metadata.description,
+        };
+        const extras = {
+          manifest: epub.manifest,
+          toc: epub.toc,
+          meta: epub.metadata,
+        };
+
+        await fs.unlink(epubPath); // delete the file after parsing
+        res.json({ metadata, extras });
+      });
+
+      epub.parse();
+    } catch (error) {
+      console.error(error);
+      await fs.unlink(epubPath).catch(() => {}); // try to clean up
+      res.status(500).json({ error: "Failed to process EPUB file" });
+    }
   }
 }

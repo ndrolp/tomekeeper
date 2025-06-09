@@ -37,5 +37,22 @@ const coversStorage = multer.diskStorage({
   },
 });
 
+const temporalStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const subfolder = "temporal"; // e.g., ?subfolder=covers
+    const fullPath = path.join(BASE_UPLOAD_PATH, subfolder.toString());
+
+    // Ensure directory exists
+    fs.mkdirSync(fullPath, { recursive: true });
+
+    cb(null, fullPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
 export const upload = multer({ storage });
 export const uploadCover = multer({ storage: coversStorage });
+export const uploadTemporal = multer({ storage: temporalStorage });
