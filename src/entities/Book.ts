@@ -23,6 +23,9 @@ export class Book {
   genre?: string;
 
   @Column({ nullable: true })
+  externalCoverUrl?: string;
+
+  @Column({ nullable: true })
   publicationYear?: number;
 
   @Column({ nullable: true })
@@ -51,4 +54,5 @@ export interface IBook {
   serie?: ISerie;
   seriesOrder?: number;
   language?: string;
+  externalCoverUrl?: string;
 }

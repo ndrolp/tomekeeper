@@ -8,6 +8,7 @@ import { Serie } from "./Serie";
       .createQueryBuilder()
       .select("book.id", "id")
       .addSelect("book.title", "title")
+      .addSelect("book.externalCoverUrl", "externalCoverUrl")
       .addSelect("book.author", "author")
       .addSelect("book.language", "language")
       .addSelect("book.publicationYear", "publicationYear")
@@ -32,4 +33,6 @@ export class BookHeaderView {
   seriesOrder: number;
   @ViewColumn()
   series: string;
+  @ViewColumn()
+  externalCoverUrl: string;
 }
