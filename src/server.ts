@@ -9,6 +9,7 @@ import { AppDataSource } from "./database";
 import { BooksController } from "./controllers/BooksController";
 import cors from "cors";
 import { MediaController } from "./controllers/Media";
+import { ExtrasController } from "./controllers/ExtrasController";
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-defineRoutes([AuthController, BooksController, MediaController], app, true);
+defineRoutes(
+  [AuthController, BooksController, MediaController, ExtrasController],
+  app,
+  true,
+);
 
 const router = Router();
 
