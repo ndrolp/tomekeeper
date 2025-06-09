@@ -1,9 +1,11 @@
-import { Equal, FindOptionsWhere, Like } from "typeorm";
+import { Equal, FindOptionsWhere, ILike, Like } from "typeorm";
 import { AppDataSource } from "../database";
 import { Book, IBook } from "../entities/Book";
 import { ISerie } from "../entities/Serie";
 import { SeriesService } from "./SeriesService";
 import { BookHeaderView } from "../entities/BookHeaderView";
+
+export type GetBooksSortOptions = "title" | "author" | "series";
 
 export class BooksService {
   static async createBook(newBook: IBook): Promise<Book> {
@@ -14,6 +16,7 @@ export class BooksService {
       genre: newBook.genre,
       publicationYear: newBook.publicationYear,
       seriesOrder: newBook.seriesOrder,
+      language: newBook.language,
     };
 
     if (newBook.serie) {
@@ -47,10 +50,34 @@ export class BooksService {
     return data;
   }
 
-  static async filterHeader(): Promise<BookHeaderView[]> {
-    const headersRepository = AppDataSource.getRepository(BookHeaderView);
+  static async filterHeader(options: {
+    query?: string;
+    sort?: GetBooksSortOptions;
+  }): Promise<BookHeaderView[]> {
+    const { query, sort } = options;
+    const repository = AppDataSource.getRepository(BookHeaderView);
 
-    const data = await headersRepository.find();
-    return data;
+    const where = query
+      ? [
+          { title: ILike(`%${query}%`) },
+          { author: ILike(`%${query}%`) },
+          { series: ILike(`%${query}%`) },
+        ]
+      : undefined;
+
+    const validSortFields: GetBooksSortOptions[] = [
+      "title",
+      "author",
+      "series",
+    ];
+    const order =
+      sort && validSortFields.includes(sort)
+        ? { [sort]: "ASC" as const }
+        : { title: "ASC" as const };
+
+    return await repository.find({
+      where,
+      order,
+    });
   }
 }

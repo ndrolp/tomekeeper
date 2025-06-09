@@ -50,4 +50,5 @@ export interface IBook {
   description?: string;
   serie?: ISerie;
   seriesOrder?: number;
+  language?: string;
 }

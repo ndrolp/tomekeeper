@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Controller, Route, Validate } from "ndro-express-utils";
 import { BookCreationSchema } from "../validation/BooksValidationSchemas";
 import { IBook } from "../entities/Book";
-import { BooksService } from "../services/BooksService";
+import { BooksService, GetBooksSortOptions } from "../services/BooksService";
 
 @Controller("/books")
 export class BooksController {
@@ -15,11 +15,18 @@ export class BooksController {
   }
 
   @Route("get", "/")
-  async filterBooks(
+  async filterBooksHeaders(
     req: Request<object, object, object, IBook>,
     res: Response,
   ) {
-    const filteredBooks = await BooksService.filterHeader();
+    const { query, sort } = req.query as {
+      query?: string;
+      sort?: GetBooksSortOptions;
+    };
+    const filteredBooks = await BooksService.filterHeader({
+      query,
+      sort: sort ?? "title",
+    });
 
     return res.json(filteredBooks);
   }

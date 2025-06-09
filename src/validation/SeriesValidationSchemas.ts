@@ -2,5 +2,5 @@ import Joi from "joi";
 
 export const SeriesCreationSchema = Joi.object({
   name: Joi.string().required(),
-  description: Joi.string(),
+  description: Joi.string().optional(),
 });
