@@ -9,5 +9,6 @@ export const BookCreationSchema = Joi.object({
   description: Joi.string(),
   language: Joi.string(),
   serie: SeriesCreationSchema,
-  seriesOrder: Joi.number(),
+  seriesOrder: Joi.number().optional().allow(""),
+  externalCover: Joi.string().optional().allow("", null),
 });

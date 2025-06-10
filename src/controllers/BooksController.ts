@@ -31,7 +31,6 @@ export class BooksController {
       sort: sort ?? "title",
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return res.json(filteredBooks);
   }
 

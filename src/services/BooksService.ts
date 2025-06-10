@@ -15,11 +15,12 @@ export class BooksService {
       description: newBook.description,
       genre: newBook.genre,
       publicationYear: newBook.publicationYear,
-      seriesOrder: newBook.seriesOrder,
+      seriesOrder:
+        newBook.seriesOrder === 0 ? 0 : newBook.seriesOrder || undefined,
       language: newBook.language,
     };
 
-    if (newBook.serie) {
+    if (newBook?.serie?.name && newBookData.serie?.name !== "") {
       const newSeriesData: ISerie = {
         name: newBook.serie.name,
         description: newBook.serie.description,

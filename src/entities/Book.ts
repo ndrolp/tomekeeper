@@ -37,7 +37,7 @@ export class Book {
   @ManyToOne(() => Serie, (serie) => serie.books, { nullable: true })
   serie?: Serie;
 
-  @Column({ nullable: true })
+  @Column({ type: "decimal", nullable: true })
   seriesOrder?: number;
 
   @OneToMany(() => Edition, (edition) => edition.book)

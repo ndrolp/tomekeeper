@@ -1,6 +1,6 @@
 import Joi from "joi";
 
 export const SeriesCreationSchema = Joi.object({
-  name: Joi.string().required(),
-  description: Joi.string().optional(),
-});
+  name: Joi.string().optional().allow(""),
+  description: Joi.string().optional().allow(""),
+}).optional();
