@@ -56,6 +56,7 @@ export class BooksController {
           language: epub.metadata.language,
           subject: epub.metadata.subject,
           description: epub.metadata.description,
+          cover: null as string | null,
         };
         const extras = {
           manifest: epub.manifest,
@@ -63,8 +64,41 @@ export class BooksController {
           meta: epub.metadata,
         };
 
+        let coverImage = {
+          img: null as string | null,
+          mime: null as string | null,
+        };
+
+        const { cover } = epub.metadata as unknown as {
+          cover: string | undefined | null;
+        };
+
+        await new Promise((resolve, reject) => {
+          epub.getImage(cover ?? "asd", (error, img, mimeType) => {
+            if (error || !img || !mimeType) {
+              return reject(error ?? new Error("Image or MIME type missing"));
+            }
+
+            resolve({
+              img: img.toString("base64"),
+              mime: mimeType,
+            });
+          });
+        });
+        epub.getImage(cover ?? "asd", (error, img, mimeType) => {
+          console.log(error);
+          if (!error) {
+            coverImage = {
+              img: img.toString("base64"),
+              mime: mimeType,
+            };
+
+            console.log(coverImage);
+          }
+        });
+
         await fs.unlink(epubPath); // delete the file after parsing
-        res.json({ metadata, extras });
+        res.json({ metadata, extras, coverImage });
       });
 
       epub.parse();
