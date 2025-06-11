@@ -1,4 +1,10 @@
-import { Equal, FindOptionsWhere, ILike, Like } from "typeorm";
+import {
+  Equal,
+  FindOptionsOrder,
+  FindOptionsWhere,
+  ILike,
+  Like,
+} from "typeorm";
 import { AppDataSource } from "../database";
 import { Book, IBook } from "../entities/Book";
 import { ISerie } from "../entities/Serie";
@@ -20,7 +26,12 @@ export class BooksService {
       language: newBook.language,
     };
 
-    if (newBook?.serie?.name && newBookData.serie?.name !== "") {
+    if (
+      !newBook.serie?.id &&
+      newBook?.serie?.name &&
+      newBookData.serie?.name !== ""
+    ) {
+      console.warn("SERIES FOUND");
       const newSeriesData: ISerie = {
         name: newBook.serie.name,
         description: newBook.serie.description,
@@ -32,6 +43,12 @@ export class BooksService {
 
     const bookRepository = AppDataSource.getRepository(Book);
     const book = bookRepository.create(newBookData);
+
+    if (newBook?.serie?.id) {
+      const seriesToBind = await SeriesService.getSeriesById(newBook.serie.id);
+      if (!seriesToBind) throw new Error("Series Provided Not found");
+      book.serie = seriesToBind;
+    }
     await bookRepository.save(book);
     return book;
   }
@@ -47,7 +64,7 @@ export class BooksService {
     if (filter.publicationYear)
       filters.publicationYear = Equal(filter.publicationYear);
 
-    const data = bookRepository.findBy(filters);
+    const data = await bookRepository.findBy(filters);
     return data;
   }
 
@@ -71,10 +88,14 @@ export class BooksService {
       "author",
       "series",
     ];
-    const order =
+    const order: FindOptionsOrder<BookHeaderView> =
       sort && validSortFields.includes(sort)
         ? { [sort]: "ASC" as const }
         : { title: "ASC" as const };
+
+    if (sort === "series") {
+      order.seriesOrder = "ASC";
+    }
 
     return await repository.find({
       where,

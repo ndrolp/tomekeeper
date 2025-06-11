@@ -10,6 +10,7 @@ import { BooksController } from "./controllers/BooksController";
 import cors from "cors";
 import { MediaController } from "./controllers/Media";
 import { ExtrasController } from "./controllers/ExtrasController";
+import { SeriesController } from "./controllers/SeiriesController";
 
 dotenv.config();
 const app = express();
@@ -18,7 +19,13 @@ app.use(express.json());
 app.use(cors());
 
 defineRoutes(
-  [AuthController, BooksController, MediaController, ExtrasController],
+  [
+    AuthController,
+    BooksController,
+    MediaController,
+    ExtrasController,
+    SeriesController,
+  ],
   app,
   true,
 );

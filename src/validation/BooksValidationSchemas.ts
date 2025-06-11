@@ -6,7 +6,7 @@ export const BookCreationSchema = Joi.object({
   author: Joi.string(),
   genre: Joi.string(),
   publicationYear: Joi.number().integer(),
-  description: Joi.string(),
+  description: Joi.string().optional().allow("", null),
   language: Joi.string(),
   serie: SeriesCreationSchema,
   seriesOrder: Joi.number().optional().allow(""),
