@@ -73,8 +73,8 @@ export class BooksController {
           cover: string | undefined | null;
         };
 
-        await new Promise((resolve, reject) => {
-          epub.getImage(cover ?? "asd", (error, img, mimeType) => {
+        coverImage = await new Promise((resolve, reject) => {
+          epub.getImage(cover ?? "cover.jpg", (error, img, mimeType) => {
             if (error || !img || !mimeType) {
               return reject(error ?? new Error("Image or MIME type missing"));
             }
@@ -84,17 +84,6 @@ export class BooksController {
               mime: mimeType,
             });
           });
-        });
-        epub.getImage(cover ?? "asd", (error, img, mimeType) => {
-          console.log(error);
-          if (!error) {
-            coverImage = {
-              img: img.toString("base64"),
-              mime: mimeType,
-            };
-
-            console.log(coverImage);
-          }
         });
 
         await fs.unlink(epubPath); // delete the file after parsing
