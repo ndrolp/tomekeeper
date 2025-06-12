@@ -68,6 +68,14 @@ export class BooksService {
     return data;
   }
 
+  static async getBookById(
+    id: number | string,
+  ): Promise<Book | undefined | null> {
+    const repo = AppDataSource.getRepository(Book);
+    const book = await repo.findOneBy({ id: parseInt(id.toString()) });
+    return book;
+  }
+
   static async filterHeader(options: {
     query?: string;
     sort?: GetBooksSortOptions;

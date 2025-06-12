@@ -31,7 +31,18 @@ export class BooksController {
       sort: sort ?? "title",
     });
 
+    //await new Promise((resolve) => setTimeout(resolve, 1000));
     return res.json(filteredBooks);
+  }
+
+  @Route("get", "/:id")
+  async getBookById(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) return res.json({ error: "Invalid request" }).status(400);
+    const book = await BooksService.getBookById(id);
+    if (!book)
+      return res.status(404).json({ error: `Book with id: ${id} not found` });
+    return res.json(book);
   }
 
   @Route("post", "/analyze", uploadTemporal.single("file"))
