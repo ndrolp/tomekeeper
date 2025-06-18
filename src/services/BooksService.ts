@@ -110,4 +110,26 @@ export class BooksService {
       order,
     });
   }
+
+  static async getFilters() {
+    const bookRepo = AppDataSource.getRepository(Book);
+
+    const genresRaw: { genre: string }[] = await bookRepo
+      .createQueryBuilder("book")
+      .select("DISTINCT book.genre")
+      .getRawMany();
+
+    const authorsRaw: { author: string }[] = await bookRepo
+      .createQueryBuilder("book")
+      .select("DISTINCT book.author")
+      .getRawMany();
+
+    const genres = Array.from(
+      new Set(genresRaw.flatMap((item) => item.genre.split(", "))),
+    );
+
+    const authors = Array.from(new Set(authorsRaw.map((item) => item.author)));
+
+    return { genres, authors };
+  }
 }

@@ -105,7 +105,13 @@ export class BooksController {
     } catch (error) {
       console.error(error);
       await fs.unlink(epubPath).catch(() => {}); // try to clean up
-      res.status(500).json({ error: "Failed to process EPUB file" });
+      return res.status(500).json({ error: "Failed to process EPUB file" });
     }
+  }
+
+  @Route("get", "/extras/filters")
+  async getFilters(_: Request, res: Response) {
+    const data = await BooksService.getFilters();
+    return res.json(data);
   }
 }
