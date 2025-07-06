@@ -11,6 +11,7 @@ import cors from "cors";
 import { MediaController } from "./controllers/Media";
 import { ExtrasController } from "./controllers/ExtrasController";
 import { SeriesController } from "./controllers/SeiriesController";
+import { QuotesController } from "./controllers/QuoteController";
 
 dotenv.config();
 const app = express();
@@ -25,9 +26,10 @@ defineRoutes(
     MediaController,
     ExtrasController,
     SeriesController,
+    QuotesController
   ],
   app,
-  true,
+  true
 );
 
 const router = Router();

@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { Edition } from "./Edition";
 import { ISerie, Serie } from "./Serie";
+import { Quote } from "./Quote";
 
 @Entity()
 export class Book {
@@ -42,6 +43,9 @@ export class Book {
 
   @OneToMany(() => Edition, (edition) => edition.book)
   editions: Edition[];
+
+  @OneToMany(() => Quote, (quote) => quote.book)
+  quotes: Quote[]
 }
 
 export interface IBook {

@@ -5,6 +5,7 @@ import { Book } from "./entities/Book";
 import { Edition } from "./entities/Edition";
 import { Serie } from "./entities/Serie";
 import { BookHeaderView } from "./entities/BookHeaderView";
+import { Quote } from "./entities/Quote";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -15,5 +16,5 @@ export const AppDataSource = new DataSource({
   database: CONFIG.database.databaseName,
   synchronize: true,
   logging: false,
-  entities: [Book, BookHeaderView, Edition, Serie],
+  entities: [Book, BookHeaderView, Edition, Serie, Quote],
 });
