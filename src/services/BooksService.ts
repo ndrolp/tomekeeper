@@ -21,6 +21,7 @@ export class BooksService {
       description: newBook.description,
       genre: newBook.genre,
       publicationYear: newBook.publicationYear,
+      externalCoverUrl: newBook.externalCoverUrl,
       seriesOrder:
         newBook.seriesOrder === 0 ? 0 : newBook.seriesOrder || undefined,
       language: newBook.language,

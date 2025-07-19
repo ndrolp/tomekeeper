@@ -45,7 +45,7 @@ export class Book {
   editions: Edition[];
 
   @OneToMany(() => Quote, (quote) => quote.book)
-  quotes: Quote[]
+  quotes: Quote[];
 }
 
 export interface IBook {

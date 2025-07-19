@@ -10,5 +10,5 @@ export const BookCreationSchema = Joi.object({
   language: Joi.string(),
   serie: SeriesCreationSchema,
   seriesOrder: Joi.number().optional().allow(""),
-  externalCover: Joi.string().optional().allow("", null),
+  externalCoverUrl: Joi.string().optional().allow("", null),
 });
