@@ -115,4 +115,12 @@ export class BooksController {
     const data = await BooksService.getFilters();
     return res.json(data);
   }
+
+  @Route("delete", "/delete/:id")
+  async deleteBook(req: Request, res: Response) {
+    const { id } = req.params;
+    const data = await BooksService.deleteBook(parseInt(id));
+
+    return res.json(data).status(204);
+  }
 }

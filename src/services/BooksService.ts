@@ -2,6 +2,7 @@ import {
   Equal,
   FindOptionsOrder,
   FindOptionsWhere,
+  DeleteResult,
   ILike,
   Like,
 } from "typeorm";
@@ -132,5 +133,11 @@ export class BooksService {
     const authors = Array.from(new Set(authorsRaw.map((item) => item.author)));
 
     return { genres, authors };
+  }
+
+  static async deleteBook(bookID: number): Promise<DeleteResult> {
+    const bookRepo = AppDataSource.getRepository(Book);
+    const removed = await bookRepo.delete(bookID);
+    return removed;
   }
 }
