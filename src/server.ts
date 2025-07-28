@@ -12,6 +12,7 @@ import { MediaController } from "./controllers/Media";
 import { ExtrasController } from "./controllers/ExtrasController";
 import { SeriesController } from "./controllers/SeiriesController";
 import { QuotesController } from "./controllers/QuoteController";
+import { OpenLibraryController } from "./controllers/OpenLibraryController";
 
 dotenv.config();
 const app = express();
@@ -26,10 +27,11 @@ defineRoutes(
     MediaController,
     ExtrasController,
     SeriesController,
-    QuotesController
+    QuotesController,
+    OpenLibraryController,
   ],
   app,
-  true
+  true,
 );
 
 const router = Router();
