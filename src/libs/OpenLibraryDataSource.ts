@@ -19,7 +19,9 @@ export class OpenLibraryDataSource {
     return data.data;
   }
   static async getWorkDetails(key: string) {
-    const data = await openApi.get(`/works/${key}.json?lang=es`);
+    const url = `/works/${key}.json`;
+    console.log({ url });
+    const data = await openApi.get(url);
     return data.data;
   }
 }
