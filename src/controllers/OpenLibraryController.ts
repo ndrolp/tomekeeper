@@ -14,7 +14,6 @@ export class OpenLibraryController {
   async getKeyDetails(req: Request, res: Response) {
     const { key } = req.query as { key: string };
     const data = await OpenLibraryService.getKeyDetais(key);
-    console.log({ key });
     return res.json(data);
   }
 }

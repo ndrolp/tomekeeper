@@ -20,7 +20,6 @@ export class OpenLibraryDataSource {
   }
   static async getWorkDetails(key: string) {
     const url = `/works/${key}.json`;
-    console.log({ url });
     const data = await openApi.get(url);
     return data.data;
   }

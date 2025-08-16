@@ -20,7 +20,7 @@ export class Book {
   @Column({ nullable: true })
   author?: string;
 
-  @Column({ nullable: true })
+  @Column("text", { array: true, default: [] })
   genre?: string;
 
   @Column({ nullable: true })
@@ -31,9 +31,6 @@ export class Book {
 
   @Column({ nullable: true })
   description?: string;
-
-  @Column({ nullable: true })
-  language?: string;
 
   @ManyToOne(() => Serie, (serie) => serie.books, { nullable: true })
   serie?: Serie;

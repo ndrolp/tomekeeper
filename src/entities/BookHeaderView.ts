@@ -10,7 +10,6 @@ import { Serie } from "./Serie";
       .addSelect("book.title", "title")
       .addSelect("book.externalCoverUrl", "externalCoverUrl")
       .addSelect("book.author", "author")
-      .addSelect("book.language", "language")
       .addSelect("book.publicationYear", "publicationYear")
       .addSelect("book.seriesOrder", "seriesOrder")
       .addSelect("serie.name", "series")
@@ -25,8 +24,6 @@ export class BookHeaderView {
   title: string;
   @ViewColumn()
   author: string;
-  @ViewColumn()
-  language: string;
   @ViewColumn()
   publicationYear: number;
   @ViewColumn()
